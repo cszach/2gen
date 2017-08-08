@@ -1,0 +1,12 @@
+NOTES:
+
+excludeKeyFileName is an argument for list (array) of files
+that the user chooses to exclude those keys in the file(s),
+or another word, avoid creating a key that is similar to any
+key in the files
+
+If excludeKeyFileName is null, there's no exception
+If it is not, the program will avoid creating similar keys
+by scanning through the files whose names are in excludeKeyFileName,
+and if there's one matching, the program will try to create another
+random key, using a while loop.
