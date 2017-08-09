@@ -2,8 +2,8 @@ package key;
 
 import supply.CharacterLibrary;
 import supply.NumberLibrary;
-import java.io.File;
 import java.util.Scanner;
+import java.io.File;
 import java.io.FileNotFoundException;
 
 public class Password {
