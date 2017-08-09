@@ -1,7 +1,7 @@
 package key;
 
 import supply.CharacterLibrary;
-import java.util.concurrent.ThreadLocalRandom;
+import supply.NumberLibrary;
 import java.io.File;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
