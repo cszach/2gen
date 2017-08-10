@@ -64,10 +64,4 @@ public class Password {
 			break mainLoop;  // Executed only when all files are checked and no exceptions is hit
 		}
 	}
-
-	public static void main (String[] args) {
-		Password myPassword = new Password(12, true, true, true, true, null);
-		System.out.println(myPassword.value);
-		System.out.println(myPassword.length);
-	}
 }
