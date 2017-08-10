@@ -20,15 +20,20 @@ public class PinTest {
 
 	@Test
 	public void test() {
+		// TODO: Pick a random line from the exception file (which is a pin) and it's ok if the generated pin isn't the same
 		try {
 			for (int i = 0; i < 1000; i++) {
 				assertTrue(myPin.value != 
-						Files.readAllLines(Paths.get("/samples/pinlist1.txt"))
-						.get(NumberLibrary.randomNumber(1, NumberLibrary.numberOfLines("/sample/pinlist1.txt"))));				
+					Files.readAllLines(Paths.get("/samples/pinlist1.txt"))
+					.get(NumberLibrary.randomNumber(1, NumberLibrary.numberOfLines("/sample/pinlist1.txt"))));				
 			}
-		} catch (IOException e) {
-			// Do nothing
-		}
+			for (int i = 0; i < 800; i++) {
+				assertTrue(myPin.value != 
+					Files.readAllLines(Paths.get("/samples/pinlist2.txt"))
+					.get(NumberLibrary.randomNumber(1, NumberLibrary.numberOfLines("/sample/pinlist2.txt"))));
+			}
+		} 
+		catch (IOException e) {/*Do nothing*/}
 	}
 
 }
