@@ -26,8 +26,8 @@ public class PasswordTest {
 			// Shouldn't match with anything
 			for (int i = 0; i < 8000; i++) {
 				assertTrue(myPassword.value != 
-					Files.readAllLines(Paths.get("/samples/passwordlist1.txt"))
-					.get(NumberLibrary.randomNumber(1, NumberLibrary.numberOfLines("/sample/passwordlist1.txt"))));				
+					Files.readAllLines(Paths.get("samples/passwordlist1.txt"))
+					.get(NumberLibrary.randomNumber(1, NumberLibrary.numberOfLines("samples/passwordlist1.txt"))));				
 			}
 		}
 		catch (IOException e) {/*Ignore*/};

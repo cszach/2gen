@@ -24,13 +24,13 @@ public class PinTest {
 		try {
 			for (int i = 0; i < 1000; i++) {
 				assertTrue(myPin.value != 
-					Files.readAllLines(Paths.get("/samples/pinlist1.txt"))
-					.get(NumberLibrary.randomNumber(1, NumberLibrary.numberOfLines("/sample/pinlist1.txt"))));				
+					Files.readAllLines(Paths.get("samples/pinlist1.txt"))
+					.get(NumberLibrary.randomNumber(1, NumberLibrary.numberOfLines("samples/pinlist1.txt"))));				
 			}
 			for (int i = 0; i < 800; i++) {
 				assertTrue(myPin.value != 
-					Files.readAllLines(Paths.get("/samples/pinlist2.txt"))
-					.get(NumberLibrary.randomNumber(1, NumberLibrary.numberOfLines("/sample/pinlist2.txt"))));
+					Files.readAllLines(Paths.get("samples/pinlist2.txt"))
+					.get(NumberLibrary.randomNumber(1, NumberLibrary.numberOfLines("samples/pinlist2.txt"))));
 			}
 		} 
 		catch (IOException e) {/*Do nothing*/}
