@@ -8,7 +8,7 @@ import java.io.FileNotFoundException;
 
 @SuppressWarnings("deprecation")
 public class Password {
-	private String value; // The password itself
+	String value; // The password itself
 
 	// Attributes of a password
 	// Used for displaying password's details
