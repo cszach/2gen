@@ -21,6 +21,9 @@ public class PasswordTest {
 	@Test
 	public void testPassword() {
 		try {
+			// Pick a random key from the file and check if the generated password matches
+			// Repeat 8000 times
+			// Shouldn't match with anything
 			for (int i = 0; i < 8000; i++) {
 				assertTrue(myPassword.value != 
 					Files.readAllLines(Paths.get("/samples/passwordlist1.txt"))
