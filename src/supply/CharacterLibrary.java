@@ -1,8 +1,8 @@
 package supply;
 
 public class CharacterLibrary {
-	final static String UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	final static String LOWERCASE = "abcdefghijklmnopqrstuvwxyz";
-	final static String NUMBER = "0123456789";
-	final static String SYMBOL = "~`!@#$%^&*()-_+={}[]|\\;:\"<>,./?";
+	final public static String UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	final public static String LOWERCASE = "abcdefghijklmnopqrstuvwxyz";
+	final public static String NUMBER = "0123456789";
+	final public static String SYMBOL = "~`!@#$%^&*()-_+={}[]|\\;:\"<>,./?";
 }

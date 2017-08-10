@@ -41,6 +41,7 @@ public class Pin {
 							continue mainLoop; // Continue the while loop
 						}
 					}
+					reader.close();
 				} 
 				catch (FileNotFoundException e) {
 					System.err.println("File " + fileName + " not found.");
