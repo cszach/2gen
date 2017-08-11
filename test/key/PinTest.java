@@ -14,7 +14,7 @@ public class PinTest {
 
 	@Before
 	public void setUp() {
-		String[] fileList1 = {"samples/pinlist1.txt", "samples/pinlist2.txt"};
+		String[] fileList1 = {"samples/pinlist1.txt", "samples/pinlist2.txt", "samples/pinlist3.txt"};
 		myPin = new Pin(4, fileList1);
 	}
 
@@ -22,15 +22,20 @@ public class PinTest {
 	public void test() {
 		// TODO: Pick a random line from the exception file (which is a pin) and it's ok if the generated pin isn't the same
 		try {
-			for (int i = 0; i < 1000; i++) {
+			for (int trial = 0; trial < 1000; trial++) {
 				assertTrue(myPin.value != 
 					Files.readAllLines(Paths.get("samples/pinlist1.txt"))
 					.get(NumberLibrary.randomNumber(1, NumberLibrary.numberOfLines("samples/pinlist1.txt"))));				
 			}
-			for (int i = 0; i < 800; i++) {
+			for (int trial = 0; trial < 800; trial++) {
 				assertTrue(myPin.value != 
 					Files.readAllLines(Paths.get("samples/pinlist2.txt"))
 					.get(NumberLibrary.randomNumber(1, NumberLibrary.numberOfLines("samples/pinlist2.txt"))));
+			}
+			for (int trial = 0; trial < 500; trial++) {
+				assertTrue(myPin.value != 
+					Files.readAllLines(Paths.get("samples/pinlist3.txt"))
+					.get(NumberLibrary.randomNumber(1, NumberLibrary.numberOfLines("samples/pinlist3.txt"))));
 			}
 		} 
 		catch (IOException e) {/*Do nothing*/}
