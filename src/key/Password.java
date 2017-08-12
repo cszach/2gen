@@ -1,6 +1,6 @@
 package key;
 
-import supply.CharacterLibrary;
+import supply.CharacterLib;
 import org.apache.commons.lang3.RandomStringUtils;
 import java.util.Scanner;
 import java.io.File;
@@ -12,11 +12,11 @@ public class Password {
 
 	// Attributes of a password
 	// Used for displaying password's details
-	private int length;
-	private boolean upperCase;
-	private boolean lowerCase;
-	private boolean number;
-	private boolean symbol;
+	int length;
+	boolean upperCase;
+	boolean lowerCase;
+	boolean number;
+	boolean symbol;
 
 	/**
 	 * @param length Length attribute of the password
@@ -39,10 +39,10 @@ public class Password {
 		mainLoop: while (true) {
 			// TODO: Generate password
 			String charInPassword = "";  // This string contains allowed characters in the would-be-generated password
-			if (upperCase) { charInPassword += CharacterLibrary.UPPERCASE; }
-			if (lowerCase) { charInPassword += CharacterLibrary.LOWERCASE; }
-			if (number) { charInPassword += CharacterLibrary.NUMBER; }
-			if (symbol) { charInPassword += CharacterLibrary.SYMBOL; }
+			if (upperCase) { charInPassword += CharacterLib.UPPERCASE; }
+			if (lowerCase) { charInPassword += CharacterLib.LOWERCASE; }
+			if (number) { charInPassword += CharacterLib.NUMBER; }
+			if (symbol) { charInPassword += CharacterLib.SYMBOL; }
 			this.value = RandomStringUtils.random(length, charInPassword);
 			
 			if (excludeKeyFileName == null) {  // No exception is set
@@ -52,17 +52,17 @@ public class Password {
 			// TODO: Scan file(s) to check for exceptions
 			for (String fileName : excludeKeyFileName) {
 				try {
-					File keyFile = new File(fileName);
-					Scanner reader = new Scanner(keyFile);
-					while (reader.hasNextLine()) {
-						String flagKey = reader.nextLine();
-						if (flagKey == this.value) { // Generated password matches with an exception
-							reader.close();
-							continue mainLoop; // Continue the while loop
-						}
-					}
-					reader.close();
-				} 
+                    File keyFile = new File(fileName);
+                    Scanner reader = new Scanner(keyFile);
+                    while (reader.hasNextLine()) {
+                        String flagKey = reader.nextLine();
+                        if (flagKey.equals(this.value)) { // Generated password matches with an exception
+                            reader.close();
+                            continue mainLoop; // Continue the while loop
+                        }
+                    }
+                    reader.close();
+                }
 				catch (FileNotFoundException e) {
 					System.err.println("File " + fileName + " not found.");
 					// Continue with the next files

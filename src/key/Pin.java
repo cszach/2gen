@@ -1,6 +1,6 @@
 package key;
 
-import supply.NumberLibrary;
+import supply.NumberLib;
 import java.io.File;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
@@ -22,7 +22,7 @@ public class Pin {
 
 			// TODO: Generate random pin
 			for (int i = 0; i < length; i++) {
-				int flag = NumberLibrary.randomNumber(1, 9);
+				int flag = NumberLib.randomNumber(1, 9);
 				value += Integer.toString(flag);
 			}
 
@@ -41,13 +41,17 @@ public class Pin {
 					reader = new Scanner(keyFile);
 					while (reader.hasNextLine()) {
 						String flagKey = reader.nextLine();
-						if (flagKey == this.value) { // Generated pin matches with an exception
+						if (flagKey.equals(this.value)) { // Generated pin matches with an exception
 							reader.close();
 							continue mainLoop; // Continue the while loop
 						}
 					}
 					reader.close();
-				} 
+				}
+				/**
+				 * @exception FileNotFoundException Exception file is listed but not found. If this exception is hit,
+				 * output the error as log and continue with the next files
+				 */
 				catch (FileNotFoundException e) {
 					System.err.println("File " + fileName + " not found.");
 					// Continue with the next files
