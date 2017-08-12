@@ -9,6 +9,10 @@ public class Pin {
 	String value; // The pin itself
 	int length; // Number of digits
 
+	/**
+	 * @param length The length attribute of the pin
+	 * @param excludeKeyFileName File(s) containing pin that the user doesn't want to generate
+	 */
 	Pin(int length, String[] excludeKeyFileName) {
 		this.length = length;
 		String value = "";
@@ -30,10 +34,11 @@ public class Pin {
 
 			// TODO: Scan files to check matches
 			// There's custom file(s) for scanning -> scan to see if there's a match
+			Scanner reader;
 			for (String fileName : excludeKeyFileName) {
 				try {
 					File keyFile = new File(fileName);
-					Scanner reader = new Scanner(keyFile);
+					reader = new Scanner(keyFile);
 					while (reader.hasNextLine()) {
 						String flagKey = reader.nextLine();
 						if (flagKey == this.value) { // Generated pin matches with an exception

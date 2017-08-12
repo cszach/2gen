@@ -18,6 +18,14 @@ public class Password {
 	private boolean number;
 	private boolean symbol;
 
+	/**
+	 * @param length Length attribute of the password
+	 * @param upperCase Attribute indicates if the password contains upper case characters
+	 * @param lowerCase Attribute indicates if the password contains lower case characters
+	 * @param number Attribute indicates if the password contains numbers
+	 * @param symbol Attribute indicates if the password contains symbols, or special characters
+	 * @param excludeKeyFileName An array containing names of files that contain passwords the user doesn't want to generate
+	 */
 	Password(int length, boolean upperCase, boolean lowerCase, boolean number, boolean symbol,
 			String[] excludeKeyFileName) {
 		// TODO: Assign attributes
@@ -30,7 +38,7 @@ public class Password {
 		// TODO: Generate password and check exceptions
 		mainLoop: while (true) {
 			// TODO: Generate password
-			String charInPassword = "";
+			String charInPassword = "";  // This string contains allowed characters in the would-be-generated password
 			if (upperCase) { charInPassword += CharacterLibrary.UPPERCASE; }
 			if (lowerCase) { charInPassword += CharacterLibrary.LOWERCASE; }
 			if (number) { charInPassword += CharacterLibrary.NUMBER; }
