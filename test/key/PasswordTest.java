@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
-import supply.NumberLibrary;
+import supply.NumberLib;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.io.IOException;
@@ -24,10 +24,10 @@ public class PasswordTest {
 			// Pick a random key from the file and check if the generated password matches
 			// Repeat 8000 times
 			// Shouldn't match with anything
-			for (int i = 0; i < 8000; i++) {
-				assertTrue(myPassword.value != 
+			for (int trial = 0; trial < 8000; trial++) {
+				assertTrue(myPassword.value.equals(
 					Files.readAllLines(Paths.get("samples/passwordlist1.txt"))
-					.get(NumberLibrary.randomNumber(1, NumberLibrary.numberOfLines("samples/passwordlist1.txt"))));				
+					.get(NumberLib.randomNumber(1, NumberLib.numberOfLines("samples/passwordlist1.txt")))));
 			}
 		}
 		catch (IOException e) {/*Ignore*/};

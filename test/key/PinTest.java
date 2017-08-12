@@ -6,7 +6,7 @@ import org.junit.Test;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.io.IOException;
-import supply.NumberLibrary;
+import supply.NumberLib;
 
 
 public class PinTest {
@@ -25,17 +25,17 @@ public class PinTest {
 			for (int trial = 0; trial < 1000; trial++) {
 				assertTrue(myPin.value != 
 					Files.readAllLines(Paths.get("samples/pinlist1.txt"))
-					.get(NumberLibrary.randomNumber(1, NumberLibrary.numberOfLines("samples/pinlist1.txt"))));				
+					.get(NumberLib.randomNumber(1, NumberLib.numberOfLines("samples/pinlist1.txt"))));
 			}
 			for (int trial = 0; trial < 800; trial++) {
 				assertTrue(myPin.value != 
 					Files.readAllLines(Paths.get("samples/pinlist2.txt"))
-					.get(NumberLibrary.randomNumber(1, NumberLibrary.numberOfLines("samples/pinlist2.txt"))));
+					.get(NumberLib.randomNumber(1, NumberLib.numberOfLines("samples/pinlist2.txt"))));
 			}
 			for (int trial = 0; trial < 500; trial++) {
 				assertTrue(myPin.value != 
 					Files.readAllLines(Paths.get("samples/pinlist3.txt"))
-					.get(NumberLibrary.randomNumber(1, NumberLibrary.numberOfLines("samples/pinlist3.txt"))));
+					.get(NumberLib.randomNumber(1, NumberLib.numberOfLines("samples/pinlist3.txt"))));
 			}
 		} 
 		catch (IOException e) {/*Do nothing*/}
