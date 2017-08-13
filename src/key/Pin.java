@@ -6,21 +6,22 @@ import java.util.Scanner;
 import java.io.FileNotFoundException;
 
 public class Pin {
-	String value; // The pin itself
-	int length; // Number of digits
+	public String value; // The pin itself
+	public int length; // Number of digits
 
 	/**
 	 * @param length The length attribute of the pin
 	 * @param excludeKeyFileName File(s) containing pin that the user doesn't want to generate
 	 */
-	Pin(int length, String[] excludeKeyFileName) {
+	public Pin(int length, String[] excludeKeyFileName) {
 		this.length = length;
-		String value = "";
+		String value;
 
 		// TODO: Generate random pin and check if it matches any exception
 		mainLoop: while (true) {
 
 			// TODO: Generate random pin
+			value = "";
 			for (int i = 0; i < length; i++) {
 				int flag = NumberLib.randomNumber(1, 9);
 				value += Integer.toString(flag);

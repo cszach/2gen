@@ -8,15 +8,15 @@ import java.io.FileNotFoundException;
 
 @SuppressWarnings("deprecation")
 public class Password {
-	String value; // The password itself
+	public String value; // The password itself
 
 	// Attributes of a password
 	// Used for displaying password's details
-	int length;
-	boolean upperCase;
-	boolean lowerCase;
-	boolean number;
-	boolean symbol;
+	public int length;
+	public boolean upperCase;
+	public boolean lowerCase;
+	public boolean number;
+	public boolean symbol;
 
 	/**
 	 * @param length Length attribute of the password
@@ -26,7 +26,7 @@ public class Password {
 	 * @param symbol Attribute indicates if the password contains symbols, or special characters
 	 * @param excludeKeyFileName An array containing names of files that contain passwords the user doesn't want to generate
 	 */
-	Password(int length, boolean upperCase, boolean lowerCase, boolean number, boolean symbol,
+	public Password(int length, boolean upperCase, boolean lowerCase, boolean number, boolean symbol,
 			String[] excludeKeyFileName) {
 		// TODO: Assign attributes
 		this.length = length;
@@ -36,9 +36,10 @@ public class Password {
 		this.symbol = symbol;
 		
 		// TODO: Generate password and check exceptions
+		String charInPassword;
 		mainLoop: while (true) {
 			// TODO: Generate password
-			String charInPassword = "";  // This string contains allowed characters in the would-be-generated password
+			charInPassword = "";  // This string contains allowed characters in the would-be-generated password
 			if (upperCase) { charInPassword += CharacterLib.UPPERCASE; }
 			if (lowerCase) { charInPassword += CharacterLib.LOWERCASE; }
 			if (number) { charInPassword += CharacterLib.NUMBER; }
