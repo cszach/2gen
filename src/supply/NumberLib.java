@@ -7,11 +7,27 @@ import java.io.LineNumberReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class NumberLibrary {
+/**
+ * <h1>Number Library</h1>
+ * Provide function for generating random numbers (which is used everywhere),
+ * and function for getting number of lines present in a file
+ */
+public class NumberLib {
+    /**
+     * @param min Minimum possible number that could be generated, inclusive
+     * @param max Maximum possible number that could be generated, inclusive
+     * @return Generated random number in range from min to max
+     */
 	public static int randomNumber(int min, int max) {
 		return ThreadLocalRandom.current().nextInt(min, max + 1);
 	}
 
+    /**
+     *
+     * @param fileName Name of the file we want to get number of lines in
+     * @return Number of lines in the file whose name is thrown as the (only) argument
+     * @throws IOException
+     */
 	public static int numberOfLines(String fileName) throws IOException {
 		int flag = 0;
 		LineNumberReader result = null;
