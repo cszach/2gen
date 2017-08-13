@@ -1,16 +1,14 @@
 package key;
 
 import static org.junit.Assert.*;
-
 import org.junit.Before;
 import org.junit.Test;
+import supply.CharacterLib;
 import supply.NumberLib;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.io.IOException;
 
 public class PasswordTest {
-	Password myPassword;
+	private Password myPassword;
 
 	@Before
 	public void setUp() {
@@ -21,16 +19,22 @@ public class PasswordTest {
 	@Test
 	public void testPassword() {
 		try {
-			// Pick a random key from the file and check if the generated password matches
-			// Repeat 8000 times
-			// Shouldn't match with anything
-			for (int trial = 0; trial < 8000; trial++) {
-				assertTrue(myPassword.value.equals(
-					Files.readAllLines(Paths.get("samples/passwordlist1.txt"))
-					.get(NumberLib.randomNumber(1, NumberLib.numberOfLines("samples/passwordlist1.txt")))));
+		    // TODO: Compare generated password to a random line in one of the exception files
+            /**
+             * Repeating 200 times, check if the generated password is the same as any line picked randomly
+             * in the exception files.
+             * Should not equal all the time
+             */
+            String comparingKey;
+			for (int trial = 0; trial < 200; trial++) {
+				comparingKey = CharacterLib.lineAt(
+				        NumberLib.randomNumber(0, NumberLib.numberOfLines("samples/passwordlist1.txt") - 2),
+                        "samples/passwordlist1.txt");
+
+				assertNotEquals(myPassword.value, comparingKey);
 			}
 		}
-		catch (IOException e) {/*Ignore*/};
+		catch (IOException e) {/*Ignore*/}
 	}
 
 }

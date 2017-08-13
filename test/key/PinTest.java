@@ -10,12 +10,12 @@ import supply.NumberLib;
 
 
 public class PinTest {
-	Pin myPin1;
-	Pin myPin2;
-    String file01 = "/code/Java/2Gen/samples/pinlist1.txt";
-    String file02 = "/code/Java/2Gen/samples/pinlist2.txt";
-    String file03 = "/code/Java/2Gen/samples/pinlist3.txt";
-    String file04 = "/code/Java/2Gen/samples/pinlist4.txt";
+	private Pin myPin1;
+	private Pin myPin2;
+    String file01 = "samples/pinlist1.txt";
+    String file02 = "samples/pinlist2.txt";
+    String file03 = "samples/pinlist3.txt";
+    String file04 = "samples/pinlist4.txt";  // This file contains all pins from 1000 to 9999, except 4242
 
 	@Before
 	public void setUp() {
@@ -33,17 +33,17 @@ public class PinTest {
 			for (int trial = 0; trial < 200; trial++) {
 				assertTrue(myPin1.value !=
 					Files.readAllLines(Paths.get(file01))
-					.get(NumberLib.randomNumber(1, NumberLib.numberOfLines(file01) - 2)));
+					.get(NumberLib.randomNumber(0, NumberLib.numberOfLines(file01) - 2)));
 			}
 			for (int trial = 0; trial < 200; trial++) {
 				assertTrue(myPin1.value !=
 						Files.readAllLines(Paths.get(file02))
-								.get(NumberLib.randomNumber(1, NumberLib.numberOfLines(file02) - 2)));
+								.get(NumberLib.randomNumber(0, NumberLib.numberOfLines(file02) - 2)));
 			}
             for (int trial = 0; trial < 200; trial++) {
                 assertTrue(myPin1.value !=
                         Files.readAllLines(Paths.get(file03))
-                                .get(NumberLib.randomNumber(1, NumberLib.numberOfLines(file03) - 2)));
+                                .get(NumberLib.randomNumber(0, NumberLib.numberOfLines(file03) - 2)));
             }
 		    assertTrue(myPin2.value.equals("4242"));
 			assertFalse(myPin2.value.equals("1000"));
