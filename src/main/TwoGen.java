@@ -1,12 +1,12 @@
 package main;
 
-import exception.LengthOutOfRangeException;
 import system.IO;
 import key.Password;
 import key.Pin;
 import supply.NumberLib;
 import java.util.ArrayList;
 import java.util.Scanner;
+import exception.LengthOutOfRangeException;
 import exception.InvalidDuplicateValueException;
 
 /**
@@ -46,6 +46,8 @@ public class TwoGen {
             userInput = IO.removedSpaces(scanner.nextLine());
 
             // TODO: Process and Output
+
+            // Exit. Must placed before all processes for any other command
             if (IO.command(userInput).equals("exit")) {
                 System.exit(0);
             }
@@ -64,7 +66,7 @@ public class TwoGen {
                     exceptPasswordList = new ArrayList<>();
                     exceptPassword = null;
 
-                    // TODO: Process input
+                    // TODO: Process input for Password generation
                     if (userInput.split(" ").length == 2) {  // Input: generate password  ... -> default argument
                         myPassword = new Password
                                 (NumberLib.randomNumber(8, 12),
@@ -74,17 +76,20 @@ public class TwoGen {
                                 true,
                                 null);
                         System.out.println(myPassword.value);  // Output
-                        myPassword = null;
                         continue mainProcess;
                     }
                     else {  // generate password + arguments -> process
-                        paramSeeker: for (int argAt = 1; argAt < IO.argument(userInput).length; argAt++) {
+                        for (int argAt = 1; argAt < IO.argument(userInput).length; argAt++) {
                             if (IO.argument(userInput)[argAt].equals("-l")) {
                                 try {
                                     length = Integer.parseInt(IO.argument(userInput)[argAt + 1]);
                                     if (length < 8 || length > 30) {
                                         throw new LengthOutOfRangeException();
                                     }
+                                }
+                                catch (ArrayIndexOutOfBoundsException e) {
+                                    System.err.println("No argument found for password's length");
+                                    continue mainProcess;
                                 }
                                 catch (NumberFormatException e) {
                                     System.err.println("Invalid argument for password's length");
@@ -101,6 +106,9 @@ public class TwoGen {
                                         throw new InvalidDuplicateValueException();
                                     }
                                 }
+                                catch (ArrayIndexOutOfBoundsException e) {
+                                    System.err.println("No argument found for number of passwords");
+                                }
                                 catch (NumberFormatException e) {
                                     System.err.println("Invalid argument for number of passwords");
                                     continue mainProcess;
@@ -114,12 +122,12 @@ public class TwoGen {
                             if (IO.argument(userInput)[argAt].equals("-n")) {useNumber = true;}
                             if (IO.argument(userInput)[argAt].equals("-s")) {useSymbol = true;}
                             if (IO.argument(userInput)[argAt].equals("-e")) {
-                                getFileNames: for (int getFile = argAt + 1; getFile < IO.argument(userInput).length; getFile++) {
+                                getFileNamesOne: for (int getFile = argAt + 1; getFile < IO.argument(userInput).length; getFile++) {
                                     if (!IO.argument(userInput)[getFile].substring(0, 1).equals("-")) {
                                         exceptPasswordList.add(IO.argument(userInput)[getFile]);
                                     }
                                     else {
-                                        break getFileNames;
+                                        break getFileNamesOne;
                                     }
                                 }
                             }
@@ -140,7 +148,7 @@ public class TwoGen {
                             useSymbol = true;
                         }
 
-                        // TODO: Generate and display
+                        // TODO: Generate and display password
                         for (int counter = 0; counter < duplicatePassword; counter++) {
                             myPassword = new Password(length, useUpperCase, useLowerCase, useNumber, useSymbol, exceptPassword);
                             System.out.println(myPassword.value);
@@ -148,12 +156,83 @@ public class TwoGen {
                     }
                 }
 
-                // TODO: Generate pin
+                // TODO: Start session for Pin
                 if (IO.argument(userInput)[0].equals("pin")) {
                     // TODO: Setup for Pin
                     numberOfDigits = NumberLib.randomNumber(4, 8);
                     duplicatePin = 1;
                     exceptPinList = new ArrayList<>();
+                    exceptPin = null;
+
+                    // TODO: Process input for Pin generation
+                    if (userInput.split(" ").length == 2) {  // generate pin -> use default settings
+                        myPin = new Pin(NumberLib.randomNumber(4, 8), null);
+                        System.out.println(myPin.value);
+                        continue mainProcess;
+                    }
+                    else {  // generate pin with arguments -> process those arguments
+                        for (int argAt = 1; argAt < IO.argument(userInput).length; argAt++) {
+                            if (IO.argument(userInput)[argAt].equals("-l")) {
+                                try {
+                                    numberOfDigits = Integer.parseInt(IO.argument(userInput)[argAt + 1]);
+                                    if (numberOfDigits < 2 || numberOfDigits > 20) {
+                                        throw new LengthOutOfRangeException();
+                                    }
+                                }
+                                catch (ArrayIndexOutOfBoundsException e) {
+                                    System.err.println("No argument found for pin's number of digits");
+                                    continue mainProcess;
+                                }
+                                catch (NumberFormatException e) {
+                                    System.err.println("Invalid argument for pin's number of digits");
+                                    continue mainProcess;
+                                }
+                                catch (LengthOutOfRangeException e) {
+                                    continue mainProcess;
+                                }
+                            }
+                            if (IO.argument(userInput)[argAt].equals("-d")) {
+                                try {
+                                    duplicatePin = Integer.parseInt(IO.argument(userInput)[argAt + 1]);
+                                    if (duplicatePin < 1) {
+                                        throw new InvalidDuplicateValueException();
+                                    }
+                                }
+                                catch (ArrayIndexOutOfBoundsException e) {
+                                    System.err.println("No argument found for number of pins");
+                                    continue mainProcess;
+                                }
+                                catch (NumberFormatException e) {
+                                    System.err.println("Invalid argument for number of pins");
+                                    continue mainProcess;
+                                }
+                                catch (InvalidDuplicateValueException e) {
+                                    continue mainProcess;
+                                }
+                            }
+                            if (IO.argument(userInput)[argAt].equals("-e")) {
+                                getFileNamesTwo: for (int getFile = argAt + 1; getFile < IO.argument(userInput).length; getFile++) {
+                                    if (!IO.argument(userInput)[getFile].substring(0, 1).equals("-")) {
+                                        exceptPinList.add(IO.argument(userInput)[getFile]);
+                                    }
+                                    else {
+                                        break getFileNamesTwo;
+                                    }
+                                }
+                            }
+                        }
+                        // TODO: Move exceptPinList (ArrayList) to exceptPin (Array)
+                        if (exceptPinList.size() > 0) {
+                            exceptPin = new String[exceptPinList.size()];
+                            exceptPin = exceptPinList.toArray(exceptPin);
+                        }
+
+                        // TODO: Generate and display pin
+                        for (int counter = 0; counter < duplicatePin; counter++) {
+                            myPin = new Pin(numberOfDigits, exceptPin);
+                            System.out.println(myPin.value);
+                        }
+                    }
                 }
             }
         }
