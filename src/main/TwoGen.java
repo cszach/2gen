@@ -43,7 +43,7 @@ public class TwoGen {
 
             // TODO: Get user input
             System.out.print("$ ");
-            userInput = IO.removedSpaces(scanner.nextLine().toLowerCase());
+            userInput = IO.removedSpaces(scanner.nextLine());
 
             // TODO: Process and Output
             if (IO.command(userInput).equals("exit")) {
@@ -52,7 +52,7 @@ public class TwoGen {
 
             // TODO: Generate keys
             if (IO.command(userInput).equals("generate")) {
-                // TODO: Generate password
+                // TODO: Start session for Password
                 if (IO.argument(userInput)[0].equals("password")) {
                     // TODO: Setup for Password
                     length = NumberLib.randomNumber(8, 12);
@@ -64,6 +64,7 @@ public class TwoGen {
                     exceptPasswordList = new ArrayList<>();
                     exceptPassword = null;
 
+                    // TODO: Process input
                     if (userInput.split(" ").length == 2) {  // Input: generate password  ... -> default argument
                         myPassword = new Password
                                 (NumberLib.randomNumber(8, 12),
