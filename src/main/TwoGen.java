@@ -23,13 +23,13 @@ public class TwoGen {
 
         // Password and its attributes
         Password myPassword;
-        int length = NumberLib.randomNumber(8, 12);
-        int duplicatePassword = 1;
-        boolean useUpperCase = false;
-        boolean useLowerCase = false;
-        boolean useNumber = true;
-        boolean useSymbol = false;
-        ArrayList<String> exceptPasswordList = new ArrayList<>();
+        int length;
+        int duplicatePassword;
+        boolean useUpperCase;
+        boolean useLowerCase;
+        boolean useNumber;
+        boolean useSymbol;
+        ArrayList<String> exceptPasswordList;
         String[] exceptPassword;
 
         // Pin and its variants
@@ -39,11 +39,11 @@ public class TwoGen {
         ArrayList<String> exceptPinList;
         String[] exceptPin;
 
-        mainProcess: while (userInput != "exit") {
+        mainProcess: while (!userInput.equals("exit")) {
 
             // TODO: Get user input
             System.out.print("$ ");
-            userInput = scanner.nextLine().toLowerCase();
+            userInput = IO.removedSpaces(scanner.nextLine().toLowerCase());
 
             // TODO: Process and Output
             if (IO.command(userInput).equals("exit")) {
@@ -54,6 +54,16 @@ public class TwoGen {
             if (IO.command(userInput).equals("generate")) {
                 // TODO: Generate password
                 if (IO.argument(userInput)[0].equals("password")) {
+                    // TODO: Setup for Password
+                    length = NumberLib.randomNumber(8, 12);
+                    duplicatePassword = 1;
+                    useUpperCase = false;
+                    useLowerCase = false;
+                    useNumber = false;
+                    useSymbol = false;
+                    exceptPasswordList = new ArrayList<>();
+                    exceptPassword = null;
+
                     if (userInput.split(" ").length == 2) {  // Input: generate password  ... -> default argument
                         myPassword = new Password
                                 (NumberLib.randomNumber(8, 12),
@@ -68,7 +78,7 @@ public class TwoGen {
                     }
                     else {  // generate password + arguments -> process
                         for (int argAt = 1; argAt < IO.argument(userInput).length; argAt++) {
-                            if (IO.argument(userInput)[argAt] == "-l") {
+                            if (IO.argument(userInput)[argAt].equals("-l")) {
                                 try {
                                     length = Integer.parseInt(IO.argument(userInput)[argAt + 1]);
                                     if (length < 8 || length > 30) {
@@ -83,7 +93,7 @@ public class TwoGen {
                                     continue mainProcess;
                                 }
                             }
-                            if (IO.argument(userInput)[argAt] == "-d") {
+                            if (IO.argument(userInput)[argAt].equals("-d")) {
                                 try {
                                     duplicatePassword = Integer.parseInt(IO.argument(userInput)[argAt + 1]);
                                     if (duplicatePassword < 1) {
@@ -98,13 +108,13 @@ public class TwoGen {
                                     continue mainProcess;
                                 }
                             }
-                            if (IO.argument(userInput)[argAt] == "-uc") {useUpperCase = true;};
-                            if (IO.argument(userInput)[argAt] == "-lc") {useLowerCase = true;};
-                            if (IO.argument(userInput)[argAt] == "-n") {useNumber = true;};
-                            if (IO.argument(userInput)[argAt] == "-s") {useSymbol = true;};
-                            if (IO.argument(userInput)[argAt] == "-e") {
+                            if (IO.argument(userInput)[argAt].equals("-uc")) {useUpperCase = true;}
+                            if (IO.argument(userInput)[argAt].equals("-lc")) {useLowerCase = true;}
+                            if (IO.argument(userInput)[argAt].equals("-n")) {useNumber = true;}
+                            if (IO.argument(userInput)[argAt].equals("-s")) {useSymbol = true;}
+                            if (IO.argument(userInput)[argAt].equals("-e")) {
                                 getFileNames: for (int getFile = argAt + 1; getFile < IO.argument(userInput).length; getFile++) {
-                                    if (IO.argument(userInput)[getFile].substring(0, 1) != "-") {
+                                    if (!IO.argument(userInput)[getFile].substring(0, 1).equals("-")) {
                                         exceptPasswordList.add(IO.argument(userInput)[getFile]);
                                     }
                                     else {
@@ -113,21 +123,34 @@ public class TwoGen {
                                 }
                             }
                             // TODO: Move exceptPasswordList (ArrayList) to exceptPassword (Array)
-                            exceptPassword = new String[exceptPasswordList.size()];
-                            exceptPassword = exceptPasswordList.toArray(exceptPassword);
-
-                            // TODO: Generate and display
-                            for (int index = 0; index < duplicatePassword; index++) {
-                                myPassword = new Password(length, useUpperCase, useLowerCase, useNumber, useSymbol, exceptPassword);
-                                System.out.println(myPassword.value);
+                            if (exceptPasswordList.size() > 0) {
+                                exceptPassword = new String[exceptPasswordList.size()];
+                                exceptPassword = exceptPasswordList.toArray(exceptPassword);
                             }
+
+                            // If useUpperCase, useLowerCase, useNumber and useSymbol are all false (by default)
+                            // ...change them all to true
+                            if (!useUpperCase && !useLowerCase && !useNumber && !useSymbol) {
+                                useUpperCase = true;
+                                useLowerCase = true;
+                                useNumber = true;
+                                useSymbol = true;
+                            }
+                        }
+                        // TODO: Generate and display
+                        for (int counter = 0; counter < duplicatePassword; counter++) {
+                            myPassword = new Password(length, useUpperCase, useLowerCase, useNumber, useSymbol, exceptPassword);
+                            System.out.println(myPassword.value);
                         }
                     }
                 }
 
                 // TODO: Generate pin
                 if (IO.argument(userInput)[0].equals("pin")) {
-
+                    // TODO: Setup for Pin
+                    numberOfDigits = NumberLib.randomNumber(4, 8);
+                    duplicatePin = 1;
+                    exceptPinList = new ArrayList<>();
                 }
             }
         }
