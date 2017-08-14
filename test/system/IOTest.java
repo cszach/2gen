@@ -7,10 +7,6 @@ import system.IO;
 
 public class IOTest {
 
-	@Before
-	public void setUp() throws Exception {
-	}
-
 	@Test
 	public void testRemovedSpaces() {
 		assertEquals("exit", IO.removedSpaces("   exit "));
