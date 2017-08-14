@@ -78,7 +78,7 @@ public class TwoGen {
                         continue mainProcess;
                     }
                     else {  // generate password + arguments -> process
-                        for (int argAt = 1; argAt < IO.argument(userInput).length; argAt++) {
+                        paramSeeker: for (int argAt = 1; argAt < IO.argument(userInput).length; argAt++) {
                             if (IO.argument(userInput)[argAt].equals("-l")) {
                                 try {
                                     length = Integer.parseInt(IO.argument(userInput)[argAt + 1]);
@@ -123,21 +123,23 @@ public class TwoGen {
                                     }
                                 }
                             }
-                            // TODO: Move exceptPasswordList (ArrayList) to exceptPassword (Array)
-                            if (exceptPasswordList.size() > 0) {
-                                exceptPassword = new String[exceptPasswordList.size()];
-                                exceptPassword = exceptPasswordList.toArray(exceptPassword);
-                            }
 
-                            // If useUpperCase, useLowerCase, useNumber and useSymbol are all false (by default)
-                            // ...change them all to true
-                            if (!useUpperCase && !useLowerCase && !useNumber && !useSymbol) {
-                                useUpperCase = true;
-                                useLowerCase = true;
-                                useNumber = true;
-                                useSymbol = true;
-                            }
                         }
+                        // TODO: Move exceptPasswordList (ArrayList) to exceptPassword (Array)
+                        if (exceptPasswordList.size() > 0) {
+                            exceptPassword = new String[exceptPasswordList.size()];
+                            exceptPassword = exceptPasswordList.toArray(exceptPassword);
+                        }
+
+                        // If useUpperCase, useLowerCase, useNumber and useSymbol are all false (by default)
+                        // ...change them all to true
+                        if (!useUpperCase && !useLowerCase && !useNumber && !useSymbol) {
+                            useUpperCase = true;
+                            useLowerCase = true;
+                            useNumber = true;
+                            useSymbol = true;
+                        }
+
                         // TODO: Generate and display
                         for (int counter = 0; counter < duplicatePassword; counter++) {
                             myPassword = new Password(length, useUpperCase, useLowerCase, useNumber, useSymbol, exceptPassword);
