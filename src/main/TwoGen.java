@@ -32,6 +32,12 @@ public class TwoGen {
         ArrayList<String> exceptPasswordList;
         String[] exceptPassword;
 
+        // Check if password's length is unset, or equal to 0
+        // For example:
+        // "generate password -d 10" as input would output 10 different passwords with different lengths
+        // Without the variable lengthUnset, it would output 10 different passwords, but share one length value
+        boolean passwordLengthUnset;
+
         // Pin and its variants
         Pin myPin;
         int numberOfDigits;
@@ -39,10 +45,13 @@ public class TwoGen {
         ArrayList<String> exceptPinList;
         String[] exceptPin;
 
+        // This variable has the correspond function to passwordLengthUnset. See above
+        boolean pinLengthUnset;
+
         mainProcess: while (!userInput.equals("exit")) {
 
             // TODO: Get user input
-            System.out.print("$ ");
+            System.out.print("2Gen $ ");
             userInput = IO.removedSpaces(scanner.nextLine());
 
             // TODO: Process and Output
@@ -54,10 +63,16 @@ public class TwoGen {
 
             // TODO: Generate keys
             if (IO.command(userInput).equals("generate")) {
+                // Check if there is at least one argument is passed
+                // If there's 0, cancel all the sessions and processes
+                if (IO.argument(userInput).length == 0) {
+                    continue mainProcess;
+                }
+
                 // TODO: Start session for Password
                 if (IO.argument(userInput)[0].equals("password")) {
                     // TODO: Setup for Password
-                    length = NumberLib.randomNumber(8, 12);
+                    length = 0;
                     duplicatePassword = 1;
                     useUpperCase = false;
                     useLowerCase = false;
@@ -65,6 +80,7 @@ public class TwoGen {
                     useSymbol = false;
                     exceptPasswordList = new ArrayList<>();
                     exceptPassword = null;
+                    passwordLengthUnset = false;
 
                     // TODO: Process input for Password generation
                     if (userInput.split(" ").length == 2) {  // Input: generate password  ... -> default argument
@@ -148,8 +164,13 @@ public class TwoGen {
                             useSymbol = true;
                         }
 
+                        if (length == 0) {
+                            passwordLengthUnset = true;
+                        }
+
                         // TODO: Generate and display password
                         for (int counter = 0; counter < duplicatePassword; counter++) {
+                            if (passwordLengthUnset) {length = NumberLib.randomNumber(8, 12);}
                             myPassword = new Password(length, useUpperCase, useLowerCase, useNumber, useSymbol, exceptPassword);
                             System.out.println(myPassword.value);
                         }
@@ -159,10 +180,11 @@ public class TwoGen {
                 // TODO: Start session for Pin
                 if (IO.argument(userInput)[0].equals("pin")) {
                     // TODO: Setup for Pin
-                    numberOfDigits = NumberLib.randomNumber(4, 8);
+                    numberOfDigits = 0;
                     duplicatePin = 1;
                     exceptPinList = new ArrayList<>();
                     exceptPin = null;
+                    pinLengthUnset = false;
 
                     // TODO: Process input for Pin generation
                     if (userInput.split(" ").length == 2) {  // generate pin -> use default settings
@@ -227,8 +249,12 @@ public class TwoGen {
                             exceptPin = exceptPinList.toArray(exceptPin);
                         }
 
+                        if (numberOfDigits == 0) {
+                            pinLengthUnset = true;
+                        }
                         // TODO: Generate and display pin
                         for (int counter = 0; counter < duplicatePin; counter++) {
+                            if (pinLengthUnset) {numberOfDigits = NumberLib.randomNumber(4, 8);}
                             myPin = new Pin(numberOfDigits, exceptPin);
                             System.out.println(myPin.value);
                         }
