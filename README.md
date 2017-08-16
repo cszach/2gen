@@ -2,8 +2,7 @@
 Extended password generator
 
 ## Status
-Almost completed, GUI developing is left
-
+Almost completed, GUI developing is left  
 This README will be completed when the GUI delopment is done for 2Gen
 
 ## Notes
