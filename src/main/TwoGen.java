@@ -61,6 +61,17 @@ public class TwoGen {
                 System.exit(0);
             }
 
+            // Clear console screen
+            if (IO.command(userInput).equals("clear") || IO.command(userInput).equals("cls")
+                    || IO.command(userInput).equals("clrscr")) {
+                String cls = new String("\u001b[2J");
+                String home = new String("\u001b[H");
+                System.out.print(cls + home);
+                System.out.flush();
+                cls = null;
+                home = null;
+            }
+
             // TODO: Generate keys
             if (IO.command(userInput).equals("generate")) {
                 // Check if there is at least one argument is passed
@@ -91,7 +102,8 @@ public class TwoGen {
                                 true,
                                 true,
                                 null);
-                        System.out.println(myPassword.value);  // Output
+                        System.out.println("Output: " + myPassword.value);  // Output
+                        System.out.println();
                         continue mainProcess;
                     }
                     else {  // generate password + arguments -> process
@@ -104,11 +116,11 @@ public class TwoGen {
                                     }
                                 }
                                 catch (ArrayIndexOutOfBoundsException e) {
-                                    System.err.println("No argument found for password's length");
+                                    System.err.println("Error: No argument found for password's length");
                                     continue mainProcess;
                                 }
                                 catch (NumberFormatException e) {
-                                    System.err.println("Invalid argument for password's length");
+                                    System.err.println("Error: Invalid argument for password's length");
                                     continue mainProcess;
                                 }
                                 catch (LengthOutOfRangeException e) {
@@ -123,10 +135,10 @@ public class TwoGen {
                                     }
                                 }
                                 catch (ArrayIndexOutOfBoundsException e) {
-                                    System.err.println("No argument found for number of passwords");
+                                    System.err.println("Error: No argument found for number of passwords");
                                 }
                                 catch (NumberFormatException e) {
-                                    System.err.println("Invalid argument for number of passwords");
+                                    System.err.println("Error: Invalid argument for number of passwords");
                                     continue mainProcess;
                                 }
                                 catch (InvalidDuplicateValueException e) {
@@ -172,7 +184,8 @@ public class TwoGen {
                         for (int counter = 0; counter < duplicatePassword; counter++) {
                             if (passwordLengthUnset) {length = NumberLib.randomNumber(8, 12);}
                             myPassword = new Password(length, useUpperCase, useLowerCase, useNumber, useSymbol, exceptPassword);
-                            System.out.println(myPassword.value);
+                            System.out.println("Output [" + (counter + 1) + "]: " + myPassword.value);
+                            System.out.println();
                         }
                     }
                 }
@@ -189,7 +202,8 @@ public class TwoGen {
                     // TODO: Process input for Pin generation
                     if (userInput.split(" ").length == 2) {  // generate pin -> use default settings
                         myPin = new Pin(NumberLib.randomNumber(4, 8), null);
-                        System.out.println(myPin.value);
+                        System.out.println("Output: " + myPin.value);
+                        System.out.println();
                         continue mainProcess;
                     }
                     else {  // generate pin with arguments -> process those arguments
@@ -202,14 +216,15 @@ public class TwoGen {
                                     }
                                 }
                                 catch (ArrayIndexOutOfBoundsException e) {
-                                    System.err.println("No argument found for pin's number of digits");
+                                    System.err.println("Error: No argument found for pin's number of digits");
                                     continue mainProcess;
                                 }
                                 catch (NumberFormatException e) {
-                                    System.err.println("Invalid argument for pin's number of digits");
+                                    System.err.println("Error: Invalid argument for pin's number of digits");
                                     continue mainProcess;
                                 }
                                 catch (LengthOutOfRangeException e) {
+                                    System.err.println("Error: Invalid number of digits for pin. Must be in between 2 and 20");
                                     continue mainProcess;
                                 }
                             }
@@ -221,11 +236,11 @@ public class TwoGen {
                                     }
                                 }
                                 catch (ArrayIndexOutOfBoundsException e) {
-                                    System.err.println("No argument found for number of pins");
+                                    System.err.println("Error: No argument found for number of pins");
                                     continue mainProcess;
                                 }
                                 catch (NumberFormatException e) {
-                                    System.err.println("Invalid argument for number of pins");
+                                    System.err.println("Error: Invalid argument for number of pins");
                                     continue mainProcess;
                                 }
                                 catch (InvalidDuplicateValueException e) {
@@ -256,7 +271,8 @@ public class TwoGen {
                         for (int counter = 0; counter < duplicatePin; counter++) {
                             if (pinLengthUnset) {numberOfDigits = NumberLib.randomNumber(4, 8);}
                             myPin = new Pin(numberOfDigits, exceptPin);
-                            System.out.println(myPin.value);
+                            System.out.println("Output [" + (counter + 1) + "]: " + myPin.value);
+                            System.out.println();
                         }
                     }
                 }
