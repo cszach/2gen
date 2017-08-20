@@ -70,8 +70,6 @@ public class Password {
 			if (excludeKeyFileName == null) {  // No exception is set
 				break mainLoop;
 			}
-
-			System.out.println();
 			
 			// TODO: Scan file(s) to check for exceptions
 			for (String fileName : excludeKeyFileName) {
@@ -81,10 +79,9 @@ public class Password {
                     System.out.println("Scanning " + fileName);
                     while (reader.hasNextLine()) {
                         String flagKey = reader.nextLine();
-                        System.out.println("Comparing with: " + flagKey + " ");
                         if (flagKey.equals(this.value)) { // Generated password matches with an exception
                             reader.close();
-                            System.out.println("Generated password matched with an exception. Generating another password");
+                            System.out.println("Generated password matched with an exception. Generating another password\n");
                             continue mainLoop; // Continue the while loop
                         }
                     }

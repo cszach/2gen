@@ -36,7 +36,6 @@ public class Pin {
 				break mainLoop;
 			}
 
-			System.out.println();
 			// TODO: Scan files to check matches
 			// There's custom file(s) for scanning -> scan to see if there's a match
 			Scanner reader;
@@ -47,10 +46,9 @@ public class Pin {
 					System.out.println("Scanning " + fileName);
 					while (reader.hasNextLine()) {
 						String flagKey = reader.nextLine();
-						System.out.println("Comparing with: " + flagKey);
 						if (flagKey.equals(this.value)) { // Generated pin matches with an exception
 							reader.close();
-							System.out.println("Generated pin matched with an exception. Generating another pin");
+							System.out.println("Generated pin matched with an exception. Generating another pin\n");
 							continue mainLoop; // Continue the while loop
 						}
 					}
