@@ -39,33 +39,59 @@ public class Password {
 		String charInPassword;
 		mainLoop: while (true) {
 			// TODO: Generate password
+            System.out.println("Generating a password with a length of " + length + ":");
+
 			charInPassword = "";  // This string contains allowed characters in the would-be-generated password
-			if (upperCase) { charInPassword += CharacterLib.UPPERCASE; }
-			if (lowerCase) { charInPassword += CharacterLib.LOWERCASE; }
-			if (number) { charInPassword += CharacterLib.NUMBER; }
-			if (symbol) { charInPassword += CharacterLib.SYMBOL; }
+			System.out.print("Use upper case characters: ");
+			if (upperCase) {
+			    charInPassword += CharacterLib.UPPERCASE;
+			    System.out.println("Yes");
+			} else {System.out.println("No");};
+			System.out.print("Use lower case characters: ");
+			if (lowerCase) {
+			    charInPassword += CharacterLib.LOWERCASE;
+			    System.out.println("Yes");
+			} else {System.out.println("No");}
+			System.out.print("Use numbers: ");
+			if (number) {
+			    charInPassword += CharacterLib.NUMBER;
+			    System.out.println("Yes");
+			} else {System.out.println("No");}
+			System.out.print("Use special characters / symbols: ");
+			if (symbol) {
+			    charInPassword += CharacterLib.SYMBOL;
+			    System.out.println("Yes");
+			} else {System.out.println("No");}
+
+			// Assign a new password
 			this.value = RandomStringUtils.random(length, charInPassword);
+			System.out.println("Assigned a new password: " + this.value);
 			
 			if (excludeKeyFileName == null) {  // No exception is set
 				break mainLoop;
 			}
+
+			System.out.println();
 			
 			// TODO: Scan file(s) to check for exceptions
 			for (String fileName : excludeKeyFileName) {
 				try {
                     File keyFile = new File(fileName);
                     Scanner reader = new Scanner(keyFile);
+                    System.out.println("Scanning " + fileName);
                     while (reader.hasNextLine()) {
                         String flagKey = reader.nextLine();
+                        System.out.println("Comparing with: " + flagKey + " ");
                         if (flagKey.equals(this.value)) { // Generated password matches with an exception
                             reader.close();
+                            System.out.println("Generated password matched with an exception. Generating another password");
                             continue mainLoop; // Continue the while loop
                         }
                     }
                     reader.close();
                 }
 				catch (FileNotFoundException e) {
-					System.err.println("File " + fileName + " not found.");
+					System.err.println("Error: File " + fileName + " not found");
 					// Continue with the next files
 				}
 			}

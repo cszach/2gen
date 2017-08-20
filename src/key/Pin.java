@@ -21,6 +21,8 @@ public class Pin {
 		mainLoop: while (true) {
 
 			// TODO: Generate random pin
+			System.out.println("Generating a pin with " + length + " digits");
+
 			value = "";
 			for (int i = 0; i < length; i++) {
 				int flag = NumberLib.randomNumber(1, 9);
@@ -28,11 +30,13 @@ public class Pin {
 			}
 
 			this.value = value; // Assign the generated pin to the pin's value
+            System.out.println("Assigned a new pin: " + value);
 
 			if (excludeKeyFileName == null) { // No exception is set
 				break mainLoop;
 			}
 
+			System.out.println();
 			// TODO: Scan files to check matches
 			// There's custom file(s) for scanning -> scan to see if there's a match
 			Scanner reader;
@@ -40,10 +44,13 @@ public class Pin {
 				try {
 					File keyFile = new File(fileName);
 					reader = new Scanner(keyFile);
+					System.out.println("Scanning " + fileName);
 					while (reader.hasNextLine()) {
 						String flagKey = reader.nextLine();
+						System.out.println("Comparing with: " + flagKey);
 						if (flagKey.equals(this.value)) { // Generated pin matches with an exception
 							reader.close();
+							System.out.println("Generated pin matched with an exception. Generating another pin");
 							continue mainLoop; // Continue the while loop
 						}
 					}
@@ -54,7 +61,7 @@ public class Pin {
 				 * output the error as log and continue with the next files
 				 */
 				catch (FileNotFoundException e) {
-					System.err.println("File " + fileName + " not found.");
+					System.err.println("Error: File " + fileName + " not found");
 					// Continue with the next files
 				}
 			}
