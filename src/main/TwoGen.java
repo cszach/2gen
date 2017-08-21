@@ -112,7 +112,6 @@ public class TwoGen {
                 }
                 try {
                     if (!Files.isDirectory(Paths.get(destinateDir))) {
-                        System.out.println(destinateDir);  // Test
                         throw new DirectoryDoesNotExistException();
                     }
                     System.setProperty("user.dir", destinateDir);
