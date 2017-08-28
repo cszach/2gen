@@ -3,6 +3,7 @@ package main;
 import system.IO;
 import key.Password;
 import key.Pin;
+import supply.CharacterLib;
 import supply.NumberLib;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -68,12 +69,8 @@ public class TwoGen {
             // Clear console screen
             if (IO.command(userInput).equals("clear") || IO.command(userInput).equals("cls")
                     || IO.command(userInput).equals("clrscr")) {
-                String cls = new String("\u001b[2J");
-                String home = new String("\u001b[H");
-                System.out.print(cls + home);
+                System.out.print("\u001b[2J" + "\u001b[H");
                 System.out.flush();
-                cls = null;
-                home = null;
             }
 
             // Directory handling
@@ -88,20 +85,74 @@ public class TwoGen {
             if (IO.command(userInput).equals("cd") || IO.command(userInput).equals("chdir")) {
                 String orgDir = System.getProperty("user.dir");
                 String destinateDir = null;
+
+                // TODO: Preprocess the destination directory
                 try {
+                    // Destination "." -> Same directory
+                    if (IO.argument(userInput)[0].equals(".")) {
+                        continue mainProcess;
+                    }
+
+                    //Handler if the input is ".." (folder up)
+                    // /home/user/code + cd .. -> /home/user
+                    if (IO.argument(userInput)[0].equals("..")) {
+                        if (NumberLib.numDirDelimiter() == 1) {
+                            if (System.getProperty("os.name").equals("Windows")) {
+                                System.setProperty("user.dir", System.getProperty("user.dir").substring(0, 3));
+                                continue mainProcess;
+                            }
+                            if (System.getProperty("os.name").equals("Linux")) {
+                                System.setProperty("user.dir", "/");
+                                continue mainProcess;
+                            }
+                        }
+                        if (System.getProperty("os.name").equals("Windows")) {
+                            destinateDir = System.getProperty("user.dir").substring(0,
+                                    System.getProperty("user.dir").length() -
+                                            CharacterLib.reversedString(
+                                                    System.getProperty("user.dir")).indexOf("\\") -1);
+                        }
+                        else if (System.getProperty("os.name").equals("Linux")) {
+                            destinateDir = System.getProperty("user.dir").substring(0,
+                                    System.getProperty("user.dir").length() -
+                                            CharacterLib.reversedString(
+                                                    System.getProperty("user.dir")).indexOf("/") - 1);
+                        }
+                        else {
+                            System.err.println("Error: Unsupported operating system");
+                            continue mainProcess;
+                        }
+                        System.setProperty("user.dir", destinateDir);
+                        continue mainProcess;
+                    }
+
                     if (System.getProperty("os.name").equals("Windows")) {
                         if (IO.argument(userInput)[0].substring(1, 2).equals(":")) {  // User provides full path
                             destinateDir = IO.argument(userInput)[0];
-                        } else {
-                            destinateDir = orgDir + "\\" + IO.argument(userInput)[0];
                         }
-                    } else if (System.getProperty("os.name").equals("Linux")) {
+                        else {
+                            if (System.getProperty("user.dir").length() == 3) {
+                                destinateDir = orgDir + IO.argument(userInput)[0];
+                            }
+                            else {
+                                destinateDir = orgDir + "\\" + IO.argument(userInput)[0];
+                            }
+                        }
+                    }
+                    else if (System.getProperty("os.name").equals("Linux")) {
                         if (IO.argument(userInput)[0].substring(0, 1).equals("/")) {  // User provides full path
                             destinateDir = IO.argument(userInput)[0];
-                        } else {
-                            destinateDir = orgDir + "/" + IO.argument(userInput)[0];
                         }
-                    } else {
+                        else {
+                            if (System.getProperty("user.dir").equals("/")) {
+                                destinateDir = orgDir + IO.argument(userInput)[0];
+                            }
+                            else {
+                                destinateDir = orgDir + "/" + IO.argument(userInput)[0];
+                            }
+                        }
+                    }
+                    else {
                         System.err.println("Error: Unsupported operating system");  // Temporary just leave this error here
                         continue mainProcess;
                     }
@@ -110,18 +161,18 @@ public class TwoGen {
                     System.err.println("Error: No argument found for new directory");
                     continue mainProcess;
                 }
+
                 try {
                     if (!Files.isDirectory(Paths.get(destinateDir))) {
                         throw new DirectoryDoesNotExistException();
                     }
+                    // Change directory
                     System.setProperty("user.dir", destinateDir);
                 }
                 catch (DirectoryDoesNotExistException e) {
                     System.err.println("Error: No such directory");
                     System.setProperty("user.dir", orgDir);
                 }
-                orgDir = null;
-                destinateDir = null;
             }
 
             // List files in the working directory
