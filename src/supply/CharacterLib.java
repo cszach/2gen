@@ -1,6 +1,7 @@
 package supply;
 
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.io.IOException;
 
@@ -28,5 +29,15 @@ public class CharacterLib {
 	        e.printStackTrace();
 	        return null;
         }
+	}
+
+    /**
+     * Function for reversing a string. In the program, it is used in the changing directory stage
+     * @param inputString The string that needs to be reversed
+     * @return The reversed string
+     */
+	public static String reversedString(String inputString) {
+		String result = new StringBuffer(inputString).reverse().toString();
+		return result;
 	}
 }
