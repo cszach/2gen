@@ -71,6 +71,7 @@ public class TwoGen {
                     || IO.command(userInput).equals("clrscr")) {
                 System.out.print("\u001b[2J" + "\u001b[H");
                 System.out.flush();
+                continue mainProcess;
             }
 
             // Directory handling
@@ -79,6 +80,7 @@ public class TwoGen {
             // Get working directory
             if (IO.command(userInput).equals("pwd")) {
                 System.out.println(System.getProperty("user.dir"));
+                continue mainProcess;
             }
 
             // Change directory
@@ -186,6 +188,7 @@ public class TwoGen {
                 }
                 dir = null;
                 filesList = null;
+                continue mainProcess;
             }
 
             // TODO: Generate keys
@@ -193,6 +196,7 @@ public class TwoGen {
                 // Check if there is at least one argument is passed
                 // If there's 0, cancel all the sessions and processes
                 if (IO.argument(userInput).length == 0) {
+                    System.err.println("Error: No argument given for the command \"generate\"");
                     continue mainProcess;
                 }
 
@@ -240,6 +244,7 @@ public class TwoGen {
                                     continue mainProcess;
                                 }
                                 catch (LengthOutOfRangeException e) {
+                                    System.err.println("Error: Invalid length: Must be between 8 and 30");
                                     continue mainProcess;
                                 }
                             }
@@ -322,6 +327,7 @@ public class TwoGen {
                             System.out.println();
                         }
                     }
+                    continue mainProcess;
                 }
 
                 // TODO: Start session for Pin
@@ -358,7 +364,7 @@ public class TwoGen {
                                     continue mainProcess;
                                 }
                                 catch (LengthOutOfRangeException e) {
-                                    System.err.println("Error: Invalid number of digits for pin. Must be in between 2 and 20");
+                                    System.err.println("Error: Invalid number of digits for pin: Must be in between 2 and 20");
                                     continue mainProcess;
                                 }
                             }
@@ -427,8 +433,10 @@ public class TwoGen {
                             System.out.println();
                         }
                     }
+                    continue mainProcess;
                 }
             }
+            System.err.println("Error: Syntax error");
         }
     }
 }
