@@ -81,14 +81,14 @@ public class Password {
                         String flagKey = reader.nextLine();
                         if (flagKey.equals(this.value)) { // Generated password matches with an exception
                             reader.close();
-                            System.out.println("Generated password matched with an exception. Generating another password\n");
+                            System.out.println("Generated password matched with an exception. Generating another password...\n");
                             continue mainLoop; // Continue the while loop
                         }
                     }
                     reader.close();
                 }
 				catch (FileNotFoundException e) {
-					System.err.println("Error: File " + fileName + " not found");
+					System.err.println("Error: File " + fileName + " not found and is ignored");
 					// Continue with the next files
 				}
 			}
