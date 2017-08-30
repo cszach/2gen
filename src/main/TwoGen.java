@@ -22,6 +22,11 @@ import exception.InvalidDuplicateValueException;
  */
 public class TwoGen {
     public static void main(String[] args) {
+        // Show warning if the user's OS is not supported (not Windows or Linux)
+        if (!System.getProperty("os.name").equals("Windows") && !System.getProperty("os.name").equals("Linux")) {
+            System.out.println("2Gen $ Warning: Your operating system is not supported");
+        }
+
         Scanner scanner = new Scanner(System.in);
         String userInput = "";
         String[] outputs;  // A list of outputs after assigning values to passwords/pins
@@ -56,8 +61,8 @@ public class TwoGen {
         mainProcess: while (!userInput.equals("exit")) {
 
             // TODO: Get user input
-            System.out.print("2Gen $ ");
-            userInput = IO.removedSpaces(scanner.nextLine());
+            System.out.print("2Gen $ ");  // PS
+            userInput = IO.removedSpaces(scanner.nextLine());  // Scan for user's input
 
             // TODO: Process and Output
 
@@ -84,6 +89,8 @@ public class TwoGen {
             }
 
             // Change directory
+            // There are two different handlers for this process: one is for Windows and one is for Linux
+            // because their directory systems are different from each other
             if (IO.command(userInput).equals("cd") || IO.command(userInput).equals("chdir")) {
                 String orgDir = System.getProperty("user.dir");
                 String destinateDir = null;
@@ -172,14 +179,14 @@ public class TwoGen {
                     System.setProperty("user.dir", destinateDir);
                     continue mainProcess;
                 }
-                catch (DirectoryDoesNotExistException e) {
+                catch (DirectoryDoesNotExistException e) {  // Directory does not exist -> set to original directory
                     System.err.println("Error: No such directory");
                     System.setProperty("user.dir", orgDir);
                     continue mainProcess;
                 }
             }
 
-            // List files in the working directory
+            // List files in the working directory (ls command)
             if (IO.command(userInput).equals("ls") || IO.command(userInput).equals("dir")) {
                 File dir = new File(System.getProperty("user.dir"));
                 String[] filesList = dir.list();
@@ -272,6 +279,8 @@ public class TwoGen {
                                     continue mainProcess;
                                 }
                             }
+                            // TODO: Collect data for allowed characters
+                            // Get attributes for allowed characters to be used in generate the password
                             if (IO.argument(userInput)[argAt].equals("-uc")) {useUpperCase = true;}
                             if (IO.argument(userInput)[argAt].equals("-lc")) {useLowerCase = true;}
                             if (IO.argument(userInput)[argAt].equals("-n")) {useNumber = true;}
