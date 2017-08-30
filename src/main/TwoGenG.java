@@ -1,7 +1,7 @@
 package main;
 
 import javax.swing.*;
-import dialog.UnsupportedOSWarn;
+// import dialog.UnsupportedOSWarn;
 
 /**
  * This is a 2Gen distribution: 2Gen GUI
@@ -12,15 +12,17 @@ import dialog.UnsupportedOSWarn;
 public class TwoGenG {
     JFrame frame;
     TwoGenG() {
-        frame = new JFrame();
+        frame = new JFrame("2Gen");
     }
 
     public static void main (String[] args) {
         // Check if OS is supported
         // If not, shows warning
+        /*
         if (System.getProperty("os.name").equals("Windows") || System.getProperty("os.name").equals("Linux")) {
             new UnsupportedOSWarn();
         }
+        */
 
         new TwoGenG();
     }
