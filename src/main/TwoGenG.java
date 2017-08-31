@@ -33,14 +33,6 @@ public class TwoGenG {
         ResourceLib.importFont("two", "NewsCycle-Regular.ttf", "News Cycle (Regular)");
         ResourceLib.importFont("gen", "NewsCycle-Bold.ttf", "News Cycle (Bold)");
 
-        // TODO: Add the program's name as a JLabel
-        JLabel two = new JLabel("2");
-        two.setFont(fonts.get("two"));
-        JLabel gen = new JLabel("Gen");
-        gen.setFont(fonts.get("gen"));
-
-        frame.add(two); frame.add(gen);
-
         // Output field for generated passwords / PINs
         JTextArea keyOutput = new JTextArea();
         frame.add(keyOutput);
