@@ -1,25 +1,32 @@
 package supply;
 
-import java.awt.Font;
 import java.io.File;
+import java.awt.Font;
 import java.io.IOException;
 import java.awt.FontFormatException;
+import static main.TwoGenG.fonts;
 
 // Dialog components
 import dialog.FontHandlingError;
 
 public class ResourceLib {
-    public static Font font(String fontFileName, String fontNameWithAttribute) {
+    /**
+     * Import fonts to be used in 2Gen GUI
+     * @param variableName The name of the variable for Font
+     * @param fontFileName Name of the file of the font (.ttf), found in the resources folder
+     * @param fontNameWithAttribute Name of the font
+     */
+    public static void importFont(String variableName, String fontFileName, String fontNameWithAttribute) {
         try {
-            return Font.createFont(Font.TRUETYPE_FONT, new File(fontFileName));
+            fonts.put(variableName, Font.createFont(Font.TRUETYPE_FONT, new File("resources/" + fontFileName)));
         }
         catch (IOException e) {
             FontHandlingError.FontFileNotFound(fontFileName);
-            return null;
+            System.exit(1);
         }
         catch (FontFormatException e) {
             FontHandlingError.CannotFormatFont(fontNameWithAttribute);
-            return null;
+            System.exit(1);
         }
     }
 }
