@@ -19,7 +19,7 @@ $
 ```
 
 ## Status
-- Missing GUI  
+- In GUI development  
 - Untested
 
 ## Notes
