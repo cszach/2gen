@@ -3,8 +3,7 @@ package main;
 import supply.ResourceLib;
 
 import javax.swing.*;
-import java.awt.Color;
-import java.awt.Font;
+import java.awt.*;
 import java.util.HashMap;
 
 /**
@@ -14,30 +13,40 @@ import java.util.HashMap;
  * @date 2017-29-08
  */
 public class TwoGenG {
-    public static HashMap<String, Font> fonts = new HashMap<>();
+    private static JFrame mainFrame;  // Main frame
+    private static JFrame outputFrame;  // Output frame, pop up after hitting the "Generate" button
 
-    JFrame frame;
+    private static JTextArea outputs;  // Output text field for writing generated keys to. Accessible everywhere in this class
+    public static HashMap<String, Font> fonts = new HashMap<>();  // For storing Font's variants with variable names
+
+    public static void showOutput() {  //
+        outputFrame = new JFrame("2Gen: Outputs");
+        outputFrame.setSize(350, 400);
+        outputFrame.getContentPane().setBackground(Color.decode("#C1DFD4"));
+        outputFrame.setLayout(null);
+        outputFrame.setResizable(false);  // Make the frame's size fixed
+        outputFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        outputFrame.setVisible(true);
+
+        outputs = new JTextArea();
+        outputs.setEditable(false);  // Make output field uneditable
+        outputs.setBounds(5, 10, 340, 380);  // This puts JTextArea to the center of the frame
+        outputFrame.add(outputs);
+    }
+
     TwoGenG() {
-        // Setup for frame
-        frame = new JFrame("2Gen");
-        frame.setSize(800, 400);
-        frame.setVisible(true);
-        frame.setLayout(null);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        // TODO: Set frame's background color
-        Color backgroundColor = Color.decode("#C1DFD4");
-        frame.getContentPane().setBackground(backgroundColor);
+        // TODO: Prepare
+        mainFrame = new JFrame("2Gen");
+        mainFrame.setSize(800, 400);
+        mainFrame.getContentPane().setBackground(Color.decode("#C1DFD4"));  // This color is used for all frames
+        mainFrame.setLayout(new FlowLayout());
+        mainFrame.setResizable(false);  // Make the frame's size fixed
+        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainFrame.setVisible(true);
 
         // TODO: Import fonts
-        ResourceLib.importFont("two", "NewsCycle-Regular.ttf", "News Cycle (Regular)");
-        ResourceLib.importFont("gen", "NewsCycle-Bold.ttf", "News Cycle (Bold)");
-
-        // Output field for generated passwords / PINs
-        JTextArea keyOutput = new JTextArea();
-        frame.add(keyOutput);
-        keyOutput.setBounds(450, 10, 335, 380);  // Set position: on the left
-        keyOutput.setEditable(false);  // Make output field uneditable
+        ResourceLib.importFont("nCR", "NewsCycle-Regular.ttf", "News Cycle (Regular)");
+        ResourceLib.importFont("nCB", "NewsCycle-Bold.ttf", "News Cycle (Bold)");
     }
 
     public static void main (String[] args) {
